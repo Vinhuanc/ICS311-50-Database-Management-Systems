@@ -1,0 +1,97 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww17360\viewh18000\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs32 \cf0 Step #3: at least twelve query scenarios + SQL syntax\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 1. Count how many medications are in their categorized medication classes, display its medication class and total count of classes.
+\f1\b0 \
+
+\f0\b 	
+\f1\b0 select medicationClass, count(medicationClass) as count from medicationUseInfo group by medicationClass;
+\f0\b \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \
+
+\f0\b 2. Display all information related to medication with generic name of \'93Albuterol\'94;\
+
+\f1\b0 	\
+    	select mui.medicationClass, mui.mainPurpose, se.upperBody, se.lowerBody, ri.yearOfApproval, ri.prescriptionQuantity, ri.introduction, ri.URL, md.avgDose, md.doseRoute from medicationUseInfo mui inner join sideEffects se on mui.medicationID=se.medicationID join relatedInformation ri on se.medicationID = ri.medicationID join medicationDosage md on md.medicationID = ri.medicationID inner join medicationInfo mi on mi.medicationID = ri.medicationID where mi.genericName='Albuterol' ;\
+\
+
+\f0\b 3. Display the medications with the prescription quantity taken in the United States from lowest to highest .\
+
+\f1\b0 	select mi.genericName, mi.brandName, ri.prescriptionQuantity from medicationInfo mi inner join relatedInformation ri on mi.medicationID = ri.medicationID order by ri.prescriptionQuantity asc; \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 4. Display all medications\'92s generic and brand names for which the year of approval is between 1942 and 1969. \
+	
+\f1\b0 select * from relatedInformation where yearOfApproval between 1942 and 1969;\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f0\b 5. Display all medications\'92s generic and brand names for which the year of approval is 1972.\
+
+\f1\b0 		select mi.genericName, mi.brandName from medicationInfo mi join relatedInformation on mi.medicationID = relatedInformation.medicationID where yearOfApproval = 1972;\
+\
+
+\f0\b 6. Display all medication\'92s generic and brand names along with a brief introduction about each medication.\
+
+\f1\b0 	select mi.genericName, mi.brandName, ri.introduction from medicationInfo mi join relatedInformation  ri on mi.medicationID=ri.medicationID ;\
+\
+
+\f0\b 7. 
+\f1\b0  
+\f0\b Display all medication IDs of medications that are prescribe by oral, injection, and solution dosage routes.\
+
+\f1\b0 	select medicationID from medicationDosage where doseRoute like 'oral, injection, solution';\
+\
+
+\f0\b 8. 
+\f1\b0  
+\f0\b Display generic names of medications that are approved in 1972 and have prescription quantity more than 10 million people.\
+	
+\f1\b0 select mi.genericName from medicationInfo mi join relatedInformation ri on mi.medicationID=ri.medicationID where ri.yearOfApproval = 1972 and ri.prescriptionQuantity > 10000000;
+\f0\b \
+
+\f1\b0 \
+
+\f0\b 9. Count how many medications are in their categorized medication classes, display its medication class and total count of classes having count more than 2.
+\f1\b0 \
+	select medicationClass, count(medicationClass) as count from medicationUseInfo group by medicationClass having count(medicationClass) >2;
+\f0\b \
+
+\f1\b0 \
+
+\f0\b 10. Display generic and brand name, upper and lower body side effects order by prescription quantity from highest to least.\
+
+\f1\b0 	select mi.genericName, mi.brandName, se.upperBody, se.lowerBody from medicationInfo mi join sideEffects se on mi.medicationID=se.medicationID join\
+ relatedInformation ri on se.medicationID=ri.medicationID group by mi.medicationID order by ri.prescriptionQuantity desc\
+
+\f0\b \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 11. Display all generic and brand names of medications available in the database with names ordered by generic names alphabetically.
+\f1\b0 \
+	Select genericName, brandName from medicationInfo order by genericName asc;\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 \
+12. Display all medications used to treat high blood pressure available within the database.\
+
+\f1\b0 	select * from hbpMedication;\
+
+\f0\b \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 VIEW:\
+
+\f1\b0 CREATE VIEW hbpMedication AS\
+select mi.genericName, mi.brandName from medicationInfo mi join medicationUseInfo mui\
+on mi.medicationID=mui.medicationID where mui.medicationClass like 'Antihypertensive'\
+}
