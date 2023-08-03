@@ -24,3 +24,5 @@ git clone https://github.com/Vinhuanc/ICS311-50-Database-Management-Systems.git
 ### Resources🔖
 - [Textbook Link](https://caucse.club/wp-content/uploads/2022/05/Database-System-Concepts-Abraham-Silberschatz-Henry-F.-Korth-etc.-.pdf)
 - [Chapter Summaries](https://db-book.com/slides-dir/index.html)
+- System Preferences > MySQL > Start server
+- MySQL UI is MySQL Workbench
