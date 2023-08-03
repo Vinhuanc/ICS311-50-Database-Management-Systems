@@ -15,7 +15,7 @@ git clone https://github.com/Vinhuanc/ICS311-50-Database-Management-Systems.git
   └── Exams: content for exams
   └── Homeworks: content for homeworks 1 - 4
   └── Projects: content for Projects 1 - 3
-  └── week#: contents for weekly meetings
+  └── week_#: contents for weekly meetings
   └── ICS311-50_Syllabus_Summer_2023.pdf: syllabus
   └── README.md: explanation of repository
 
